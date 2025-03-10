@@ -1,38 +1,29 @@
-import time
-import random
+def is_palindrome(arr, start=0, end=None):
+    if end is None:
+        end = len(arr) - 1
 
-def bubble_sort(arr):  # Ordena a lista usando o algoritmo Bubble Sort
-    
-    n = len(arr) # Pegamos o tamanho da lista arr
-    for i in range(n): # Repetimos o processo n vezes 
-        swapped = False  # Variável para otimizar se não houver trocas
-        for j in range(0, n - i - 1): # Compara pares vizinhos, seguindo o processo de ordenação com o Bubble Sort
-                     #[5, 10, 8, 4, 2] range(0,4) 
-                     #[5, 10, 8, 4, 2] range(0,3)
-                     #[5, 8, 10, 4, 2] range(0,2)
-                     #[5, 8, 4, 10, 2] range(0,1) 
+    # Caso base: Se o índice inicial ultrapassar o índice final, é um palíndromo
+    if start >= end:
+        return True
 
-            if arr[j] > arr[j + 1]:  # Se estiverem fora de ordem, trocamos
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]  # Troca os elementos
-                swapped = True # Marca que houve troca
-        if not swapped:
-            break  # Se não houve trocas, a lista já está ordenada
+    # Comparar os elementos nas posições 'start' e 'end'
+    if arr[start] != arr[end]:
+        return False
 
-def medir_tempo(tamanho): # Mede o tempo de execução do Bubble Sort para um array aleatório.
-    
-    arr = [random.randint(0, 10000) for _ in range(tamanho)]  # Gera lista aleatória
-    inicio = time.time()  # Marca o tempo inicial
-    bubble_sort(arr)  # Executa o algoritmo
-    fim = time.time()  # Marca o tempo final
-    return fim - inicio # Retorna o tempo gasto
+    # Chamada recursiva com os índices incrementados e decrementados
+    return is_palindrome(arr, start + 1, end - 1)
 
-# Testando para diferentes tamanhos de listas
-tamanhos = [100, 1000, 10000, 100000]
-for tamanho in tamanhos:
-    tempo_gasto = medir_tempo(tamanho)
-    print(f"Tempo para ordenar {tamanho} elementos: {tempo_gasto:.3f} segundos")
+# Testando os exemplos fornecidos:
 
-    
+array1 = [0, 1, 2, 3, 2, 1, 0]
+array2 = ["a", "b", "b", "a"]
+array3 = ["a", "b", "c", "b", "a"]
+array4 = ["a", "b", "c", "f", "b", "a"]
+
+print(f"array1 é palíndromo? {is_palindrome(array1)}")  # True
+print(f"array2 é palíndromo? {is_palindrome(array2)}")  # True
+print(f"array3 é palíndromo? {is_palindrome(array3)}")  # True
+print(f"array4 é palíndromo? {is_palindrome(array4)}")  # False
 
 
 
